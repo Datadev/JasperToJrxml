@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relBioMala" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce9df684-81eb-40a1-ad30-ba32d255504d">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="texto" class="java.lang.String"/>
+	<parameter name="assinatura1" class="java.lang.String"/>
+	<parameter name="assinatura2" class="java.lang.String"/>
+	<parameter name="emissao" class="java.lang.String"/>
+	<parameter name="cliente" class="java.lang.String"/>
+	<parameter name="endereco" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select t.matricula, t.nome,  t.DTAPOSENT, t.ENDCOR, t.NRIMO, t.CIDADE, t.BAIRRO, t.ESTADO, t.CEP from FI_TMP_RELBIO t left join FI_DADOSCAD d on t.MATRICULA = d.MATRICULA
+where EXTRACT(year from t.DTAPOSENT) < 2011 and (EXTRACT(year from d.DATABIOMETRIA) < 2011 or d.DATABIOMETRIA is NULL)
+order by 2]]>
+	</queryString>
+	<field name="MATRICULA" class="java.lang.Integer"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="DTAPOSENT" class="java.sql.Date"/>
+	<field name="ENDCOR" class="java.lang.String"/>
+	<field name="NRIMO" class="java.lang.Integer"/>
+	<field name="CIDADE" class="java.lang.String"/>
+	<field name="BAIRRO" class="java.lang.String"/>
+	<field name="ESTADO" class="java.lang.String"/>
+	<field name="CEP" class="java.lang.String"/>
+	<field name="COMPLEMENTO" class="java.lang.String"/>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="697" width="64" height="20" uuid="894183a7-db96-464f-83dc-0c6f02152c19"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remetente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="717" width="64" height="20" uuid="a99cc542-8862-4a50-bcfc-a92e351e020f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="99" width="555" height="1" forecolor="#999999" uuid="fda1c59f-e711-43cc-8396-90b6b3853c91"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="64" y="171" width="411" height="337" uuid="3f073bf4-0a26-4f4b-b13c-07e38a2b4431"/>
+				<textElement textAlignment="Justified" markup="html"/>
+				<textFieldExpression><![CDATA[$P{texto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="454" y="47" width="100" height="20" uuid="9104ead6-f5c1-4367-90f8-1fe3d8a51811"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="667" width="555" height="1" forecolor="#999999" uuid="3c87a95d-79d5-4577-90b4-02f770f5ebf6"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="454" y="67" width="100" height="20" uuid="48718ad5-6eb0-47d0-a6bd-3a4ac612aac4"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destinatário:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="-1" y="585" width="227" height="20" uuid="f6ff9a0e-f7f0-44ce-ad02-c16470aa4159"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{assinatura1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="327" y="585" width="227" height="20" uuid="84c42304-aee9-491e-a21e-480f2073fece"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{assinatura2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="195" y="536" width="159" height="20" uuid="56945810-f062-4866-b28b-c8ecc886e4d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Cachoeirinha, " + $P{emissao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="67" width="290" height="20" uuid="89d657b9-d35a-4edb-87fd-929e08d07c5b"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="64" y="697" width="490" height="20" uuid="a23554a1-c8d7-415a-a9c4-95b811608cb5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{cliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="64" y="719" width="490" height="20" uuid="1df30f8b-3b87-4786-9af6-1c40d580abc7"/>
+				<textFieldExpression><![CDATA[$P{endereco}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="47" width="290" height="20" uuid="5b3e627d-c5bb-465b-b170-b494d76ddc1f"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{ENDCOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="47" width="34" height="20" uuid="6eb5fb34-aaf5-4795-ae70-e385cc288bce"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{NRIMO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="285" y="27" width="169" height="20" uuid="b74aa8d8-88cf-40d5-acc2-7beaa197eb76"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{BAIRRO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="354" y="7" width="100" height="20" uuid="54fda24a-7d7d-4dc3-b41f-fe6d80f19e57"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{CEP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="254" y="7" width="100" height="20" uuid="f4e747f0-cb7f-4121-8d0d-9a4c0308fa22"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{CIDADE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="220" y="7" width="34" height="20" uuid="ab1e34bd-c0fc-4fbe-99c6-708796fe7cf5"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="47" width="119" height="20" uuid="a5ae93f8-e517-46a1-ad95-16ae690c7169"/>
+				<textElement verticalAlignment="Middle" rotation="UpsideDown"/>
+				<textFieldExpression><![CDATA[$F{COMPLEMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="119" y="47" width="11" height="20" uuid="bb5e3175-5e77-4e33-9fc0-0e05e083b7b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

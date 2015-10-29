@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relaBio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="a3a5d188-0985-4f11-8130-dfae5ec5c2f6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cliente" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select f.matricula, u.nome, case when extract(year from f.dtaposent) < 1900 then null else f.dtaposent end as dtaposent, case when extract(year from f.dtpensao) < 1900 then null else f.dtpensao end as dtpensao from fg_funcionarios f inner join un_unico u on f.CODIGOUNICO = u.CODIGO where f.situacao <> 'Funcion�rio' and ((f.situacao = 'Pensionista')) order by 2]]>
+	</queryString>
+	<field name="MATRICULA" class="java.lang.Double"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="DTAPOSENT" class="java.sql.Timestamp"/>
+	<field name="DTPENSAO" class="java.sql.Timestamp"/>
+	<pageHeader>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="34" width="538" height="20" uuid="671a8cef-b046-48b1-9f3f-ecfea86e7221"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cliente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="79" width="538" height="1" uuid="04cb0340-e69e-4e62-aec5-3181ed60a628"/>
+			</line>
+			<image>
+				<reportElement x="250" y="0" width="45" height="34" uuid="42a52483-58f3-405d-9291-e784781126ac"/>
+			</image>
+			<staticText>
+				<reportElement x="1" y="59" width="73" height="20" uuid="844db0ac-bef7-409c-aa0e-6ea7e08c5ab7"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="60" width="194" height="20" uuid="502cf549-d56f-4abb-b102-1f422af09d82"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="60" width="77" height="20" uuid="138c1a41-be08-4cfe-86bb-b8d32014313a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dt. Aposent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="60" width="77" height="20" uuid="094b975e-37db-4e10-bfb9-8b60d2d9cfce"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dt. Pensão]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="538" height="20" backcolor="#CCCCCC" uuid="53e86e74-7105-495a-bee6-f43326a6c9e3">
+					<printWhenExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="277" y="0" width="77" height="20" uuid="afb12999-706b-4f1c-b319-b7c69ead9732"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DTAPOSENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="74" y="0" width="194" height="20" uuid="7de178fd-d2eb-4140-920a-57cd6b6beb1d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="60" height="20" uuid="90d6ba69-79b2-49b7-92fb-4cf5ed0e58ac"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MATRICULA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="356" y="0" width="100" height="20" uuid="f75a9636-1765-4550-8e94-6727990caf73"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DTPENSAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="539" height="1" uuid="46dc3cce-63ab-4cfc-8973-dc14cffc26d2"/>
+			</line>
+			<textField>
+				<reportElement x="418" y="1" width="80" height="20" uuid="1ca10c2a-7696-41ba-8e48-2f54240fa18a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="498" y="1" width="40" height="20" uuid="0ecc093f-6525-43f2-b927-6bb0af3b310a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="74" y="1" width="156" height="20" uuid="acd3df0c-6fa4-4078-8733-b6719a13d925"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="1" width="43" height="20" uuid="ba7ae896-8620-4951-8ac9-46ca6f5c99ab"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Finger - ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="26" height="19" uuid="ef5add47-d915-42ef-8f34-f51f778cf183"/>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>
